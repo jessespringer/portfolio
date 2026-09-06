@@ -8,6 +8,8 @@ vite.config.ts.*
 
 # Large video files slated for external hosting (YouTube/Vimeo embed) instead of
 # being bundled into the repo/deploy. Remove these lines once a file below is
-# actually deleted from client/public/assets after its embed is wired in.
+# actually deleted from disk after its embed is wired in.
 client/public/assets/Overstand_It_1767482534945.mp4
 client/public/assets/Overstand_It_1767483976134.mp4
+attached_assets/Overstand_It_1767482534945.mp4
+attached_assets/Overstand_It_1767483976134.mp4
