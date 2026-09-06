@@ -22,7 +22,7 @@ const pillars = [
   },
   {
     title: "AI & Rapid Prototyping",
-    description: "Building working prototypes with Replit Agent, ChatGPT, and other AI tools. Shipping ideas fast to validate product concepts.",
+    description: "Building working prototypes with Claude Code, Replit Agent, and other AI tools. Shipping ideas fast to validate product concepts.",
     icon: Bot,
     link: "/projects"
   },
@@ -36,9 +36,9 @@ const pillars = [
 
 const featuredWork = [
   {
-    title: "The Energy App",
-    description: "Real-time venue popularity and gamification mobile concept with location heatmap UX and user feedback loops.",
-    tags: ["Mobile", "Gamification", "Location"],
+    title: "Ekho Music Platform — Rapid Prototyping",
+    description: "Partnered with a startup founder to rapid-prototype a two-sided artist/fan platform in Claude Code — live prototype, automated insights, and investor-ready video, all shipped in real time.",
+    tags: ["AI Rapid Prototyping", "Claude Code", "Startups"],
     link: "/projects"
   },
   {

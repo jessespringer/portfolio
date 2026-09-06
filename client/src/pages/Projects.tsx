@@ -2,14 +2,66 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Zap, Music, Blocks, Bot } from "lucide-react";
+import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones } from "lucide-react";
 import ProfessionalHeader from "@/components/ProfessionalHeader";
 import Footer from "@/components/Footer";
+import VideoEmbed from "@/components/VideoEmbed";
 const energyAppVideo = "/assets/energy-app-demo.mp4";
 const realPhoto = "/assets/jesse-real-photo.jpg";
 const aiPersona = "/assets/ai-persona-hero.jpg";
 
 const projects = [
+  {
+    title: "Ekho Music Platform — Rapid Prototyping",
+    icon: Headphones,
+    problem: "Early-stage startups need working product, not just decks — and every stakeholder needs to align on what to build next, fast.",
+    solution: "Partnered with founder Michael Jelen to rapid-prototype the Ekho Music Platform end-to-end in Claude Code — a two-sided platform connecting independent artists with their most devoted fans. Below is the build in motion: a live testable prototype, an automated artist-insights engine, a royalty-recovery tool, and the content produced along the way.",
+    tools: ["Claude Code", "GitHub", "Netlify", "React", "HeyGen Hyperframes", "CapCut"],
+    learnings: "Product and engineering are converging fast. The same AI tools that used to just speed up prototyping now let one person scope, build, test, and demo a real product — and turn every step into something stakeholders can react to immediately.",
+    tags: ["AI Rapid Prototyping", "Claude Code", "Startups", "Product + Engineering"],
+    status: "Active",
+    externalLink: "https://ekho-music-prototype.netlify.app/",
+    externalLinkLabel: "Live Prototype",
+    artifacts: [
+      {
+        title: "Centralized Change Request Mode",
+        href: "https://ekho-music-prototype.netlify.app/",
+        date: "September 6, 2026",
+        provider: "youtube",
+        videoId: "w9tqlrrNom4",
+        description: "A \"Suggest Changes\" mode built directly into the live prototype — any stakeholder can click an element on screen and leave a targeted note. Every suggestion is visible to the whole team, gets accepted or rejected in the open, and exports straight to a markdown file Claude can implement. One shared plan of record, consensus in hours instead of meetings."
+      },
+      {
+        title: "Automated Artist Insight Videos",
+        date: "September 6, 2026",
+        provider: "youtube",
+        videoId: "4-kN6d3qEs8",
+        description: "A prototype for auto-generating a personalized highlight video for every artist on the platform — reach, what's working, how they compare to peers, where to focus next. Designed to scale from one artist to thousands without a camera crew."
+      },
+      {
+        title: "Royalty Audit Tool",
+        date: "September 6, 2026",
+        provider: "youtube",
+        videoId: "N4IgC8XCIGsMy",
+        description: (
+          <>
+            A working prototype that helps independent artists identify and recover mechanical royalties — a category of payment most artists don't realize sits outside their distributor agreements with platforms like Spotify. Part of an ongoing collaboration with{" "}
+            <a href="https://www.linkedin.com/in/michaeljelen/" target="_blank" rel="noopener noreferrer" className="text-primary underline hover:no-underline">
+              Michael Jelen
+            </a>
+            , founder of Ekho. The walkthrough above was generated almost entirely from a single prompt, using HeyGen's open-source Hyperframes skill in Claude to analyze the actual code and project context.
+          </>
+        )
+      },
+      {
+        title: "Investor Livestream Recap",
+        date: "September 6, 2026",
+        provider: "youtube",
+        videoId: "D1gXqvyyzw4",
+        description: "A CapCut edit of Ekho's first livestream event, cut into an investor- and partner-ready highlight reel — years of personal music-video editing experience put to work for the business."
+      }
+    ]
+  },
   {
     title: "The Energy App",
     icon: Zap,
@@ -99,6 +151,13 @@ export default function Projects() {
                               </Link>
                             </Button>
                           )}
+                          {project.externalLink && (
+                            <Button variant="outline" size="sm" className="gap-1" asChild>
+                              <a href={project.externalLink} target="_blank" rel="noopener noreferrer">
+                                {project.externalLinkLabel || "View"} <ExternalLink className="h-3 w-3" />
+                              </a>
+                            </Button>
+                          )}
                         </div>
 
                         {project.title === "The Energy App" && (
@@ -174,6 +233,38 @@ export default function Projects() {
                           </h3>
                           <p className="text-muted-foreground italic">{project.learnings}</p>
                         </div>
+
+                        {project.artifacts && (
+                          <div className="space-y-4 pt-2 border-t">
+                            <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                              Build Artifacts
+                            </h3>
+                            <div className="grid md:grid-cols-2 gap-6">
+                              {project.artifacts.map((artifact, artifactIndex) => (
+                                <div key={artifactIndex} className="space-y-3 p-4 rounded-lg border border-border bg-muted/20">
+                                  <div className="flex items-start justify-between gap-2">
+                                    {artifact.href ? (
+                                      <a
+                                        href={artifact.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-semibold text-base hover:underline inline-flex items-center gap-1"
+                                      >
+                                        {artifact.title}
+                                        <ExternalLink className="h-3 w-3 shrink-0" />
+                                      </a>
+                                    ) : (
+                                      <h4 className="font-semibold text-base">{artifact.title}</h4>
+                                    )}
+                                    <span className="text-xs text-muted-foreground whitespace-nowrap">{artifact.date}</span>
+                                  </div>
+                                  <VideoEmbed provider={artifact.provider} id={artifact.videoId} title={artifact.title} />
+                                  <p className="text-sm text-muted-foreground">{artifact.description}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
 
                         <div className="flex flex-wrap gap-2 pt-2 border-t">
                           {project.tags.map((tag, tagIndex) => (
