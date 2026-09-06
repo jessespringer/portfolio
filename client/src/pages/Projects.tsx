@@ -29,6 +29,7 @@ const projects = [
         date: "September 6, 2026",
         provider: "youtube",
         videoId: "eaiCnTVhHy4",
+        si: "_2FC0OP9TRMtrObc",
         description: "A \"Suggest Changes\" mode built directly into the live prototype — any stakeholder can click an element on screen and leave a targeted note. Every suggestion is visible to the whole team, gets accepted or rejected in the open, and exports straight to a markdown file Claude can implement. One shared plan of record, consensus in hours instead of meetings."
       },
       {
@@ -36,6 +37,7 @@ const projects = [
         date: "September 6, 2026",
         provider: "youtube",
         videoId: "L9jeVSF7tvI",
+        si: "TqsptBIU1wwjhW6w",
         description: "A prototype for auto-generating a personalized highlight video for every artist on the platform — reach, what's working, how they compare to peers, where to focus next. Designed to scale from one artist to thousands without a camera crew."
       },
       {
@@ -43,6 +45,7 @@ const projects = [
         date: "September 6, 2026",
         provider: "youtube",
         videoId: "1MksgFC713A",
+        si: "wETjlXh9Eaxyl9xI",
         description: (
           <>
             A working prototype that helps independent artists identify and recover mechanical royalties — a category of payment most artists don't realize sits outside their distributor agreements with platforms like Spotify. Part of an ongoing collaboration with{" "}
@@ -58,6 +61,7 @@ const projects = [
         date: "September 6, 2026",
         provider: "youtube",
         videoId: "0vAj_cvmY2Q",
+        si: "0gsY7ULqQQhLa7aW",
         description: "A CapCut edit of Ekho's first livestream event, cut into an investor- and partner-ready highlight reel — years of personal music-video editing experience put to work for the business."
       }
     ]
@@ -258,7 +262,7 @@ export default function Projects() {
                                     )}
                                     <span className="text-xs text-muted-foreground whitespace-nowrap">{artifact.date}</span>
                                   </div>
-                                  <VideoEmbed provider={artifact.provider} id={artifact.videoId} title={artifact.title} />
+                                  <VideoEmbed provider={artifact.provider} id={artifact.videoId} title={artifact.title} si={artifact.si} />
                                   <p className="text-sm text-muted-foreground">{artifact.description}</p>
                                 </div>
                               ))}

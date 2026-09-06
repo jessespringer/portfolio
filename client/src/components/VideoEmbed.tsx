@@ -19,12 +19,14 @@ type VideoEmbedProps = {
   id: string;
   title: string;
   className?: string;
+  /** Optional "si" tracking param from YouTube's own Share > Embed dialog. */
+  si?: string;
 };
 
-export default function VideoEmbed({ provider, id, title, className }: VideoEmbedProps) {
+export default function VideoEmbed({ provider, id, title, className, si }: VideoEmbedProps) {
   const src =
     provider === "youtube"
-      ? `https://www.youtube-nocookie.com/embed/${id}`
+      ? `https://www.youtube.com/embed/${id}${si ? `?si=${si}` : ""}`
       : `https://player.vimeo.com/video/${id}`;
 
   return (
@@ -37,7 +39,9 @@ export default function VideoEmbed({ provider, id, title, className }: VideoEmbe
         src={src}
         title={title}
         className="absolute inset-0 h-full w-full"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
         loading="lazy"
       />
