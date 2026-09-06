@@ -29,6 +29,8 @@ type MusicNFT = {
   solanaAddress: string | null;
   audioUrl: string | null;
   videoUrl: string | null;
+  videoProvider?: "youtube" | "vimeo" | null;
+  videoId?: string | null;
   album: string | null;
   trackNumber: string | null;
   description: string | null;
@@ -123,7 +125,9 @@ function buildMockNFTs(): MusicNFT[] {
     available: true,
     solanaAddress: null,
     audioUrl: null,
-    videoUrl: `/assets/Overstand_It_1767482534945.mp4?v=${cacheBust}`,
+    videoUrl: null,
+    videoProvider: "youtube",
+    videoId: "e4ZVmdWuWkI",
     album: "In The Flow",
     trackNumber: null,
     description:

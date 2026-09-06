@@ -16,6 +16,8 @@ type MusicNFT = {
   solanaAddress: string | null;
   audioUrl: string | null;
   videoUrl: string | null;
+  videoProvider?: "youtube" | "vimeo" | null;
+  videoId?: string | null;
   album: string | null;
   trackNumber: string | null;
   description: string | null;
@@ -127,6 +129,8 @@ export default function MusicCollection() {
                   available={nft.available}
                   audioUrl={nft.audioUrl}
                   videoUrl={nft.videoUrl}
+                  videoProvider={nft.videoProvider}
+                  videoId={nft.videoId}
                   type={nft.type}
                   physicalIncluded={nft.physicalIncluded}
                   editionSize={nft.editionSize}

@@ -41,6 +41,8 @@ interface MusicNFTCardProps {
   available: boolean;
   audioUrl?: string | null;
   videoUrl?: string | null;
+  videoProvider?: "youtube" | "vimeo" | null;
+  videoId?: string | null;
   type?: string | null;
   physicalIncluded?: boolean | null;
   editionSize?: string | null;
@@ -59,13 +61,15 @@ export default function MusicNFTCard({
   available,
   audioUrl,
   videoUrl,
+  videoProvider,
+  videoId,
   type = "track",
   physicalIncluded = false,
   editionSize,
   description,
 }: MusicNFTCardProps) {
   const isCollectible = type === "collectible";
-  const isVideoCollectible = isCollectible && !!videoUrl;
+  const isVideoCollectible = isCollectible && !!(videoUrl || (videoProvider && videoId));
   const [isPlaying, setIsPlaying] = useState(false);
   const [showPaymentDialog, setShowPaymentDialog] = useState(false);
   const [showVideoPreview, setShowVideoPreview] = useState(false);
@@ -280,22 +284,37 @@ export default function MusicNFTCard({
         priceUSD={priceUSD}
       />
 
-      {isVideoCollectible && videoUrl && (
+      {isVideoCollectible && (
         <Dialog open={showVideoPreview} onOpenChange={setShowVideoPreview}>
           <DialogContent className="max-w-4xl p-0 overflow-hidden">
             <DialogHeader className="p-4 pb-0">
               <DialogTitle>{title}</DialogTitle>
             </DialogHeader>
             <div className="aspect-video bg-black">
-              <video
-                src={videoUrl}
-                controls
-                autoPlay
-                className="w-full h-full"
-                data-testid={`video-preview-${id}`}
-              >
-                Your browser does not support the video tag.
-              </video>
+              {videoProvider && videoId ? (
+                <iframe
+                  src={
+                    videoProvider === "youtube"
+                      ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`
+                      : `https://player.vimeo.com/video/${videoId}?autoplay=1`
+                  }
+                  title={title}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  data-testid={`video-preview-${id}`}
+                />
+              ) : (
+                <video
+                  src={videoUrl ?? undefined}
+                  controls
+                  autoPlay
+                  className="w-full h-full"
+                  data-testid={`video-preview-${id}`}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              )}
             </div>
           </DialogContent>
         </Dialog>
