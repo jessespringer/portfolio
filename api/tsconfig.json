@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "@/*": ["./client/src/*"],
+      "@shared/*": ["./shared/*"]
+    },
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "allowImportingTsExtensions": false,
+    "noEmit": false
+  },
+  "include": [
+    "./**/*",
+    "../server/**/*",
+    "../shared/**/*"
+  ]
+}
