@@ -13,7 +13,7 @@ const headshotSmiling = "/assets/jesse-headshot-smiling.jpg";
 const pillars = [
   {
     title: "Payments & Financial Infrastructure",
-    description: "Built regulated payment systems, led KYC platform efforts, and designed transaction flows processing billions in volume.",
+    description: "Built regulated payment systems and led KYC platform efforts — from small-business merchant gateway integrations to scaling a nationwide bitcoin ATM network.",
     icon: CreditCard,
     link: "/work"
   },
