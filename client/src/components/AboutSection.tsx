@@ -20,7 +20,7 @@ const milestones = [
 ];
 
 const tools = [
-  { category: "AI Development", icon: Bot, items: ["Replit Agent", "ChatGPT", "Gemini", "Grok Imagine"] },
+  { category: "AI Development", icon: Bot, items: ["Claude Code", "Claude Cowork", "Replit Agent", "ChatGPT", "Gemini", "Grok Imagine"] },
   { category: "Creative Production", icon: Video, items: ["Eleven Labs", "CapCut", "Studio One"] },
 ];
 

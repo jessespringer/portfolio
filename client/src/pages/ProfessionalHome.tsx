@@ -5,7 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CreditCard, Blocks, Bot, Music } from "lucide-react";
 import ProfessionalHeader from "@/components/ProfessionalHeader";
 import Footer from "@/components/Footer";
+import RotatingPhoto from "@/components/RotatingPhoto";
 const headshotImage = "/assets/jesse-real-photo.jpg";
+const headshotSerious = "/assets/jesse-headshot-serious.jpg";
+const headshotSmiling = "/assets/jesse-headshot-smiling.jpg";
 
 const pillars = [
   {
@@ -22,7 +25,7 @@ const pillars = [
   },
   {
     title: "AI & Rapid Prototyping",
-    description: "Building working prototypes with Claude Code, Replit Agent, and other AI tools. Shipping ideas fast to validate product concepts.",
+    description: "Started with Replit Agent, now building working prototypes end-to-end with Claude Code and Claude Cowork. Shipping ideas fast to validate product concepts.",
     icon: Bot,
     link: "/projects"
   },
@@ -64,11 +67,13 @@ export default function ProfessionalHome() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
               <div className="flex-shrink-0">
-                <img 
-                  src={headshotImage} 
-                  alt="Jesse Springer" 
-                  className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full object-cover border-4 border-border shadow-lg"
-                  data-testid="img-headshot"
+                <RotatingPhoto
+                  photos={[
+                    { src: headshotImage, alt: "Jesse Springer" },
+                    { src: headshotSerious, alt: "Jesse Springer" },
+                    { src: headshotSmiling, alt: "Jesse Springer" }
+                  ]}
+                  className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full border-4 border-border shadow-lg"
                 />
               </div>
               <div className="space-y-8 text-center lg:text-left">
@@ -82,7 +87,7 @@ export default function ProfessionalHome() {
                 </div>
                 
                 <p className="text-lg text-muted-foreground max-w-2xl" data-testid="text-hero-description">
-                  I've built regulated payment systems, led KYC platform efforts, and now explore AI + blockchain integration through live Replit prototypes and creator experiments. I ship working products to validate ideas—not just decks.
+                  I've built regulated payment systems, led KYC platform efforts, and evolved my rapid-prototyping practice from early Replit experiments into shipping end-to-end with Claude Code. I ship working products to validate ideas—not just decks.
                 </p>
 
                 <div className="flex flex-wrap gap-4 justify-center lg:justify-start">

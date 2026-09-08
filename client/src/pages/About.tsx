@@ -9,7 +9,8 @@ import ProfessionalHeader from "@/components/ProfessionalHeader";
 import Footer from "@/components/Footer";
 
 const timeline = [
-  { year: "2025", title: "Building in Public", description: "Shipping AI + blockchain prototypes through Replit. Exploring creator experiments and generative media." },
+  { year: "2026", title: "Building with Claude Code", description: "Shifted rapid-prototyping workflow to Claude Code and Claude Cowork — shipping production-ready prototypes for outside projects and startups, including Ekho Music Platform." },
+  { year: "2025", title: "Building in Public", description: "Shipped AI + blockchain prototypes through Replit. Explored creator experiments and generative media." },
   { year: "2024", title: "Director of Product", description: "Leading crypto and payments product strategy. Building regulated systems at enterprise scale." },
   { year: "2023", title: "Web3 Exploration", description: "Deep dive into Solana, NFT standards, and decentralized systems. Hands-on prototyping and experimentation." },
   { year: "2022", title: "KYC Platform Lead", description: "Led product for identity verification and compliance infrastructure across regulated financial services." },
@@ -18,7 +19,7 @@ const timeline = [
 const values = [
   { title: "Ship, Don't Pitch", description: "I validate ideas with working prototypes, not slide decks. Building in public forces clarity and creates accountability." },
   { title: "Strategic + Technical", description: "Great product work requires both vision and execution. I stay hands-on with the tools to stay grounded in technical reality." },
-  { title: "Rapid Experimentation", description: "AI tools have changed how fast we can test ideas. I use Replit, ChatGPT, and other tools to ship concepts in hours, not months." },
+  { title: "Rapid Experimentation", description: "AI tools have changed how fast we can test ideas. I started with Replit and ChatGPT; today I build end-to-end with Claude Code, shipping concepts in hours, not months." },
 ];
 
 export default function About() {
@@ -46,7 +47,7 @@ export default function About() {
                   By day, I lead product for critical financial infrastructure. By night, I build experimental projects that push my skills into new territory: AI personas, music NFTs, and generative media experiments.
                 </p>
                 <p className="text-muted-foreground">
-                  I believe the best product leaders ship, not just strategize. That's why I prototype with Replit Agent, build on Solana, and continuously publish working projects that demonstrate evolving capabilities.
+                  I believe the best product leaders ship, not just strategize. I prototyped early on with Replit Agent, now build end-to-end with Claude Code, ship on Solana, and continuously publish working projects that demonstrate evolving capabilities.
                 </p>
               </div>
 

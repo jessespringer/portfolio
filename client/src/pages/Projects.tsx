@@ -101,8 +101,8 @@ const projects = [
     title: "AI Development Experiments",
     icon: Bot,
     problem: "How effective are AI coding assistants for rapid prototyping and full-stack development?",
-    solution: "Built multiple projects entirely with AI assistance (Replit Agent, ChatGPT, Claude) to understand capabilities and limitations. Documented patterns for effective AI-assisted development.",
-    tools: ["Replit Agent", "ChatGPT", "Claude", "Gemini"],
+    solution: "Built multiple projects entirely with AI assistance (Replit Agent, ChatGPT, Claude, and more recently Claude Code and Claude Cowork) to understand capabilities and limitations. Documented patterns for effective AI-assisted development.",
+    tools: ["Claude Code", "Claude Cowork", "Replit Agent", "ChatGPT", "Gemini"],
     learnings: "AI dramatically accelerates development when you know what to build. Prompt engineering is a skill. Human judgment remains essential for architecture and edge cases.",
     tags: ["AI", "Development", "Experimentation"],
     status: "Ongoing"

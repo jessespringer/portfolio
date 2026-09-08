@@ -10,13 +10,13 @@ const workAreas = [
   {
     title: "Payments Infrastructure",
     icon: CreditCard,
-    description: "Led product for critical payment flows processing billions in annual transaction volume. Designed systems for authorization, settlement, and reconciliation.",
+    description: "Built and scaled payment processing infrastructure across cash, card, and crypto rails — from small-business merchant gateway integrations to a nationwide bitcoin ATM network.",
     achievements: [
-      "Reduced payment failure rates by 40% through intelligent retry logic",
-      "Architected multi-currency support across 50+ countries",
-      "Built real-time transaction monitoring dashboards"
+      "Built self-service small business merchant applications and configured Cybersource's payment gateway and value-added services for third-party eCommerce and ISV integrations, including WooCommerce and Adobe Commerce",
+      "Owned the kiosk, internal admin panel, and mobile app roadmaps for a nationwide cash-to-bitcoin payment network",
+      "Led integration of an acquired crypto-processing provider, sunsetting the legacy platform with minimal disruption to ~$12M in weekly purchase volume"
     ],
-    tags: ["Product Strategy", "Payments", "Scale"]
+    tags: ["Product Strategy", "Payments", "Gateway Integration"]
   },
   {
     title: "Crypto & Wallet Solutions",
@@ -35,7 +35,7 @@ const workAreas = [
     description: "Built KYC/AML systems meeting regulatory requirements across multiple jurisdictions. Created fraud detection pipelines and risk scoring models.",
     achievements: [
       "Reduced manual review queue by 60% with ML-powered screening",
-      "Achieved regulatory approval in 12 new markets",
+      "Designed a flexible rules engine to navigate nuanced compliance requirements across 18+ state jurisdictions, reusing shared design patterns instead of one-off builds — avoided shutdowns in 3 states while keeping compliant manual-approval revenue flowing",
       "Designed tiered verification flows for risk-based onboarding"
     ],
     tags: ["Compliance", "Risk", "Regulation"]
@@ -43,13 +43,13 @@ const workAreas = [
   {
     title: "Growth & Optimization",
     icon: TrendingUp,
-    description: "Drove product-led growth initiatives and conversion optimization. Used data to identify leverage points and ship high-impact improvements.",
+    description: "Data-driven growth practice — using analytics platforms like Amplitude to closely monitor drop-off points across the customer experience and prioritize the highest-leverage fixes.",
     achievements: [
-      "Increased activation rate by 25% through onboarding redesign",
-      "Built experimentation framework for rapid iteration",
-      "Created product analytics infrastructure from scratch"
+      "Scaled a cash-to-bitcoin ATM kiosk network from 4,000 to 10,000 units in two years, growing annual transaction volume from $264M to $660M (36% CAGR)",
+      "Used Amplitude and funnel analytics to pinpoint drop-off points across the customer journey, prioritizing fixes by impact rather than intuition",
+      "Built an omni-channel debit/credit purchase experience that drove 3x year-over-year growth to $13M"
     ],
-    tags: ["Growth", "Data", "Experimentation"]
+    tags: ["Growth", "Data", "Analytics"]
   }
 ];
 
