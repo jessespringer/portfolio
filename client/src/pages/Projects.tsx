@@ -6,6 +6,7 @@ import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones } from "l
 import ProfessionalHeader from "@/components/ProfessionalHeader";
 import Footer from "@/components/Footer";
 import VideoEmbed from "@/components/VideoEmbed";
+import RotatingPhoto from "@/components/RotatingPhoto";
 const energyAppVideo = "/assets/energy-app-demo.mp4";
 const realPhoto = "/assets/jesse-real-photo.jpg";
 const aiPersona = "/assets/ai-persona-hero.jpg";
@@ -181,15 +182,12 @@ export default function Projects() {
                         {project.title === "Jasper Springs AI Persona" && (
                           <div className="flex justify-center">
                             <div className="relative w-full max-w-xs aspect-square rounded-lg border border-border shadow-md overflow-hidden" data-testid="img-jasper-transform">
-                              <img
-                                src={realPhoto}
-                                alt="Jesse Springer - Real Photo"
-                                className="absolute inset-0 w-full h-full object-cover animate-real-fade"
-                              />
-                              <img
-                                src={aiPersona}
-                                alt="Jasper Springs - AI Persona"
-                                className="absolute inset-0 w-full h-full object-cover animate-ai-reveal"
+                              <RotatingPhoto
+                                photos={[
+                                  { src: realPhoto, alt: "Jesse Springer - Real Photo" },
+                                  { src: aiPersona, alt: "Jasper Springs - AI Persona" }
+                                ]}
+                                className="absolute inset-0 w-full h-full"
                               />
                               <div 
                                 className="absolute inset-0 pointer-events-none z-20"
