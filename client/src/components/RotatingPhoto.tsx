@@ -9,13 +9,15 @@ type RotatingPhotoProps = {
   photos: Photo[];
   className?: string;
   intervalMs?: number;
+  "data-testid"?: string;
 };
 
 /**
- * Cycles through a set of photos with a smooth crossfade blend — the same
- * fading-transition feel used for the real-photo -> AI-persona reveal on the
- * Creative pages (see index.css: animate-real-fade / animate-ai-reveal),
- * generalized here to any number of plain photos (no glitch overlay).
+ * Cycles through a set of photos with a smooth crossfade blend. Used for the
+ * home page headshot rotation, and for the real-photo -> AI-persona reveal
+ * on the Creative pages (HeroSection.tsx and Creative.tsx) — there, a
+ * separate glitch overlay div is layered on top by the caller for the
+ * transformation effect.
  *
  * Usage:
  *   <RotatingPhoto
@@ -23,7 +25,7 @@ type RotatingPhotoProps = {
  *     className="w-48 h-48 rounded-full border-4 border-border shadow-lg"
  *   />
  */
-export default function RotatingPhoto({ photos, className, intervalMs = 4500 }: RotatingPhotoProps) {
+export default function RotatingPhoto({ photos, className, intervalMs = 4500, "data-testid": dataTestId }: RotatingPhotoProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function RotatingPhoto({ photos, className, intervalMs = 4500 }: 
   }, [photos.length, intervalMs]);
 
   return (
-    <div className={`relative overflow-hidden ${className ?? ""}`} data-testid="rotating-photo">
+    <div className={`relative overflow-hidden ${className ?? ""}`} data-testid={dataTestId ?? "rotating-photo"}>
       {photos.map((photo, index) => (
         <img
           key={photo.src}

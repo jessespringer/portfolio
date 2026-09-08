@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Wallet, Music } from "lucide-react";
+import RotatingPhoto from "@/components/RotatingPhoto";
 const realPhoto = "/assets/jesse-real-photo.jpg";
 const aiPersona = "/assets/ai-persona-hero.jpg";
 
@@ -65,20 +66,14 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 rounded-3xl opacity-20 blur-3xl" />
               
               <div className="absolute inset-0 z-10 rounded-3xl overflow-hidden">
-                {/* Real Photo - fades out with shuddering */}
-                <img
-                  src={realPhoto}
-                  alt="Jasper Springs - Real Photo"
-                  className="absolute inset-0 w-full h-full object-cover rounded-3xl animate-real-fade"
-                  data-testid="img-hero-real"
-                />
-                
-                {/* AI Persona - fades in with shuddering */}
-                <img
-                  src={aiPersona}
-                  alt="Jasper Springs - AI Persona"
-                  className="absolute inset-0 w-full h-full object-cover rounded-3xl animate-ai-reveal"
-                  data-testid="img-hero-ai"
+                {/* Real photo <-> AI persona crossfade */}
+                <RotatingPhoto
+                  photos={[
+                    { src: realPhoto, alt: "Jasper Springs - Real Photo" },
+                    { src: aiPersona, alt: "Jasper Springs - AI Persona" }
+                  ]}
+                  className="absolute inset-0 w-full h-full rounded-3xl"
+                  data-testid="img-hero-transform"
                 />
 
                 {/* Glitch/Pixel blend overlay for transformation effect */}

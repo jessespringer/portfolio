@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import RotatingPhoto from "@/components/RotatingPhoto";
 const realPhoto = "/assets/jesse-real-photo.jpg";
 const aiPersona = "/assets/ai-persona-hero.jpg";
 
@@ -31,15 +32,12 @@ export default function Creative() {
                 <div className="flex flex-col md:flex-row items-center gap-6">
                   <div className="flex-shrink-0">
                     <div className="relative w-48 h-48 rounded-lg border border-border shadow-md overflow-hidden" data-testid="img-jasper-transform-creative">
-                      <img
-                        src={realPhoto}
-                        alt="Jesse Springer - Real Photo"
-                        className="absolute inset-0 w-full h-full object-cover animate-real-fade"
-                      />
-                      <img
-                        src={aiPersona}
-                        alt="Jasper Springs - AI Persona"
-                        className="absolute inset-0 w-full h-full object-cover animate-ai-reveal"
+                      <RotatingPhoto
+                        photos={[
+                          { src: realPhoto, alt: "Jesse Springer - Real Photo" },
+                          { src: aiPersona, alt: "Jasper Springs - AI Persona" }
+                        ]}
+                        className="absolute inset-0 w-full h-full"
                       />
                       <div 
                         className="absolute inset-0 pointer-events-none z-20"
