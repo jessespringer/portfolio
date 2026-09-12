@@ -10,7 +10,7 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/work", label: "Work" },
   { href: "/projects", label: "Projects" },
-  { href: "/building-with-ai", label: "Building with AI" },
+  { href: "/claude-project-work", label: "Claude Project Work" },
   { href: "/creative", label: "Creative Lab" },
   { href: "/build-log", label: "Build Log" },
   { href: "/contact", label: "Contact" },

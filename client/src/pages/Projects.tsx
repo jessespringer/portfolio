@@ -76,7 +76,7 @@ const projects = [
     learnings: "Forcing every number to show its derivation is what surfaced a unit-conversion error buried in the source models. The confirmation wasn't the fix working — it was watching the same correction fail differently on two other feedstocks, which turned a guess into a diagnosis.",
     tags: ["Techno-Economic Analysis", "Data Provenance", "Claude Cowork"],
     status: "Active",
-    link: "/building-with-ai"
+    link: "/claude-project-work"
   },
   {
     title: "BSA Loan Package Pre-Clearance Skill",
@@ -87,7 +87,7 @@ const projects = [
     learnings: "Constraining scope was the design win, not a limitation — removing judgment left assembly logic, which smaller and far cheaper models handle reliably. Expert review then caught two logic errors that were plausible but wrong in regulatory context, which is the failure mode that matters most in compliance work because the output still reads as credible.",
     tags: ["Claude Skills", "KYC & Compliance", "Evals"],
     status: "Case Study",
-    link: "/building-with-ai"
+    link: "/claude-project-work"
   },
   {
     title: "Tiered AI Agent Architecture",
@@ -98,7 +98,7 @@ const projects = [
     learnings: "Most of the effort went into identity and context files rather than model selection — agent behavior is largely context design. Deciding in advance what escalates, and why, turns an expensive habit into an architecture.",
     tags: ["Local Models", "Agent Design", "Context Engineering"],
     status: "Ongoing",
-    link: "/building-with-ai"
+    link: "/claude-project-work"
   },
   {
     title: "The Energy App",

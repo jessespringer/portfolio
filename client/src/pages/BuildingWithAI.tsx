@@ -546,7 +546,7 @@ export default function BuildingWithAI() {
                 Practice &amp; Method
               </Badge>
               <h1 className="font-display text-4xl sm:text-5xl font-bold" data-testid="text-bwa-title">
-                Building with AI
+                Claude Project Work
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl">
                 Five builds from the past few months, the path each one actually took, and the transferable technique behind it. Written for anyone evaluating how I work — including the parts that went wrong.
