@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones } from "lucide-react";
+import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, LineChart, Network, ShieldCheck } from "lucide-react";
 import ProfessionalHeader from "@/components/ProfessionalHeader";
 import Footer from "@/components/Footer";
 import VideoEmbed from "@/components/VideoEmbed";
@@ -66,6 +66,39 @@ const projects = [
         description: "A CapCut edit of Ekho's first livestream event, cut into an investor- and partner-ready highlight reel — years of personal music-video editing experience put to work for the business."
       }
     ]
+  },
+  {
+    title: "Sustainable Aviation Fuel Cost Explorer",
+    icon: LineChart,
+    problem: "Three techno-economic models lived in Excel, and their outputs had to be taken on faith. Project leads needed to compare production pathways and see what actually moves the number.",
+    solution: "Ported three SAF production pathways — alcohol-to-jet, waste oils, and Fischer-Tropsch gasification — from Excel into Python, then decomposed every figure down to its input line item so each one carries its own derivation and cited source. Shipped as an interactive dashboard priced across fifteen hubs and benchmarked against conventional jet fuel, with tornado charts separating measured twelve-month volatility from estimated volatility.",
+    tools: ["Claude Cowork", "Python", "Public data APIs", "Interactive dashboards"],
+    learnings: "Forcing every number to show its derivation is what surfaced a unit-conversion error buried in the source models. The confirmation wasn't the fix working — it was watching the same correction fail differently on two other feedstocks, which turned a guess into a diagnosis.",
+    tags: ["Techno-Economic Analysis", "Data Provenance", "Claude Cowork"],
+    status: "Active",
+    link: "/building-with-ai"
+  },
+  {
+    title: "BSA Loan Package Pre-Clearance Skill",
+    icon: ShieldCheck,
+    problem: "Commercial loan files were reaching the BSA/AML team incomplete. Every return cost days of rework before the clearance clock even started — a bottleneck the lending and compliance teams each named independently.",
+    solution: "Authored a reusable Claude Skill that reviews a commercial loan file before submission and produces a structured completeness report: entity summary, beneficial ownership chain traced to natural persons, document gap list, screening status, and a readiness flag. Built with progressive disclosure — a short activation description, a procedure body under 100 lines, and reference files loaded only when a step calls for them. Scoped deliberately so the skill flags and never decides; every compliance judgment stays with the BSA officer. Evaluated across two asymmetric loan scenarios on two model sizes.",
+    tools: ["Claude Skills", "Claude Code", "Model evals", "Progressive disclosure"],
+    learnings: "Constraining scope was the design win, not a limitation — removing judgment left assembly logic, which smaller and far cheaper models handle reliably. Expert review then caught two logic errors that were plausible but wrong in regulatory context, which is the failure mode that matters most in compliance work because the output still reads as credible.",
+    tags: ["Claude Skills", "KYC & Compliance", "Evals"],
+    status: "Case Study",
+    link: "/building-with-ai"
+  },
+  {
+    title: "Tiered AI Agent Architecture",
+    icon: Network,
+    problem: "Reaching for the largest available model on every task is slow, expensive, and unnecessary for most of what a day actually contains.",
+    solution: "A local agent (OpenClaw running Gemma through Ollama) handles roughly 90% of routine work, escalating deliberately to Claude Cowork for complex reasoning and document work, and to Claude Code for terminal-level agentic work in repositories. The whole stack is reachable from a Telegram bot, so it works from a phone without opening a terminal.",
+    tools: ["OpenClaw", "Ollama", "Claude Cowork", "Claude Code", "Telegram"],
+    learnings: "Most of the effort went into identity and context files rather than model selection — agent behavior is largely context design. Deciding in advance what escalates, and why, turns an expensive habit into an architecture.",
+    tags: ["Local Models", "Agent Design", "Context Engineering"],
+    status: "Ongoing",
+    link: "/building-with-ai"
   },
   {
     title: "The Energy App",

@@ -8,6 +8,7 @@ import ProfessionalHome from "@/pages/ProfessionalHome";
 import About from "@/pages/About";
 import Work from "@/pages/Work";
 import Projects from "@/pages/Projects";
+import BuildingWithAI from "@/pages/BuildingWithAI";
 import Creative from "@/pages/Creative";
 import Contact from "@/pages/Contact";
 import BuildLog from "@/pages/BuildLog";
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/work" component={Work} />
       <Route path="/projects" component={Projects} />
+      <Route path="/building-with-ai" component={BuildingWithAI} />
       <Route path="/creative" component={Creative} />
       <Route path="/contact" component={Contact} />
       <Route path="/build-log" component={BuildLog} />

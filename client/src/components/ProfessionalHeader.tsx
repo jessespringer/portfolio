@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/work", label: "Work" },
   { href: "/projects", label: "Projects" },
+  { href: "/building-with-ai", label: "Building with AI" },
   { href: "/creative", label: "Creative Lab" },
   { href: "/build-log", label: "Build Log" },
   { href: "/contact", label: "Contact" },
@@ -41,7 +42,7 @@ export default function ProfessionalHeader() {
                     ? "bg-muted text-foreground"
                     : "text-muted-foreground hover-elevate active-elevate-2"
                 }`}
-                data-testid={`link-nav-${link.label.toLowerCase().replace(' ', '-')}`}
+                data-testid={`link-nav-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 {link.label}
               </Link>
