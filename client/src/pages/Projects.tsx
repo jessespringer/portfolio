@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, LineChart, Network, ShieldCheck, TrendingUp, BarChart3, Fuel } from "lucide-react";
+import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, LineChart, Network, ShieldCheck, TrendingUp, Fuel } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import ProfessionalHeader from "@/components/ProfessionalHeader";
 import Footer from "@/components/Footer";
@@ -16,6 +16,7 @@ const aiPersona = "/assets/ai-persona-hero.jpg";
 type UnlockLink = { href: string; label: string; internal?: boolean };
 type UnlockClip =
   | { provider: "local"; mp4: string; webm?: string; poster: string; alt: string }
+  | { provider: "gif"; gif: string; poster: string; alt: string; width: number; height: number }
   | { provider: "youtube" | "vimeo"; videoId: string; si?: string };
 
 type Unlock = {
@@ -31,6 +32,7 @@ type Unlock = {
 
 // Loops live in client/public/assets/unlocks/<slug>.{mp4,webm} + <slug>-poster.jpg
 // (3–8 s, muted, MP4 ≤ 2 MB, WebM ≤ 1.5 MB, poster ≤ 150 KB). Longer videos go to YouTube.
+// A "gif" clip (e.g. a full-page scroll-through, ≤ ~5 MB) shows its poster instead under reduced motion.
 const unlocks: Unlock[] = [
   {
     title: "Drop Page & Drop-Pace Dashboard",
@@ -49,33 +51,18 @@ const unlocks: Unlock[] = [
     tags: ["Claude Code", "Rapid prototyping", "Product analytics"]
   },
   {
-    title: "Paper Trading Dashboard",
-    icon: BarChart3,
-    date: "September 2026",
-    built: "A single-file dashboard for a paper-only practice portfolio: a PAPER ONLY banner, NAV and P&L tiles, strategy-sleeve bars and holdings tables, all read from one JSON view model so a paper broker API can plug in later without rewriting the UI.",
-    why: "It's a small pattern for tools that agents keep up to date: data refreshes arrive as reviewable file changes, every trade or rebalance proposal needs my approval, and nothing trades from the page. The clip is a redacted sample with every value masked.",
-    clip: {
-      provider: "local",
-      mp4: "/assets/unlocks/paper-dashboard.mp4",
-      webm: "/assets/unlocks/paper-dashboard.webm",
-      poster: "/assets/unlocks/paper-dashboard-poster.jpg",
-      alt: "Paper trading dashboard, redacted sample: PAPER ONLY banner, masked NAV tiles, sleeve bars and hidden positions"
-    },
-    links: [],
-    tags: ["Claude", "Single-file apps", "Approval gates"]
-  },
-  {
     title: "SAF Pathway Cost Explorer",
     icon: Fuel,
     date: "September 2026",
     built: "An interactive cost explorer for three sustainable aviation fuel pathways, ported from Excel techno-economic models into Python. Every per-gallon figure breaks down to its input line item with its derivation and source, and a tornado chart shows what moves the number.",
     why: "Making each figure show its work is what surfaced a unit error in the source models. Switching the tornado between measured volatility, the spread across free public feeds, and calibrated estimates shows which inputs public data already covers and which would still need a paid feed.",
     clip: {
-      provider: "local",
-      mp4: "/assets/unlocks/saf-cost-explorer.mp4",
-      webm: "/assets/unlocks/saf-cost-explorer.webm",
+      provider: "gif",
+      gif: "/assets/unlocks/saf-cost-explorer.gif",
       poster: "/assets/unlocks/saf-cost-explorer-poster.jpg",
-      alt: "SAF Pathway Cost Explorer tornado chart switching between measured, live-source and calibrated volatility"
+      alt: "Scroll-through of the SAF Pathway Cost Explorer, from the pathway controls and cost stacks to the tornado chart, policy credits and input register",
+      width: 680,
+      height: 389
     },
     links: [
       { href: "/claude-project-work", label: "Case study", internal: true },
@@ -242,7 +229,7 @@ export default function Projects() {
                 Latest Unlocks
               </h2>
               <p className="text-muted-foreground">
-                The newest things I've built, each with a few-second loop of it working.
+                The newest things I've built, each with a short clip of it working.
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
@@ -268,6 +255,20 @@ export default function Projects() {
                           alt={u.clip.alt}
                           testId={`video-unlock-${i}`}
                         />
+                      ) : u.clip.provider === "gif" ? (
+                        <picture>
+                          <source srcSet={u.clip.poster} media="(prefers-reduced-motion: reduce)" />
+                          <img
+                            src={u.clip.gif}
+                            alt={u.clip.alt}
+                            width={u.clip.width}
+                            height={u.clip.height}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-auto rounded-lg border border-border shadow-md bg-muted"
+                            data-testid={`gif-unlock-${i}`}
+                          />
+                        </picture>
                       ) : (
                         <VideoEmbed provider={u.clip.provider} id={u.clip.videoId} si={u.clip.si} title={u.title} />
                       )}

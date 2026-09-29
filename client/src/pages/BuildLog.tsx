@@ -7,7 +7,7 @@ const buildLogs = [
   {
     date: "September 29, 2026",
     title: "Latest Unlocks on Projects",
-    description: "Added a Latest Unlocks section to the top of Projects: short, muted loops of the newest builds (the Ekho drop-pace dashboard, a redacted paper trading dashboard, and the SAF Pathway Cost Explorer). Loops load lazily and hold still for visitors who prefer reduced motion. The site title now leads with my name.",
+    description: "Added a Latest Unlocks section to the top of Projects: a short, muted loop of the Ekho drop-pace dashboard and a scroll-through of the SAF Pathway Cost Explorer. Clips load lazily and hold still for visitors who prefer reduced motion. The site title now leads with my name.",
     tags: ["Portfolio", "Video", "Accessibility"]
   },
   {
