@@ -5,6 +5,30 @@ import Footer from "@/components/Footer";
 
 const buildLogs = [
   {
+    date: "September 29, 2026",
+    title: "Latest Unlocks on Projects",
+    description: "Added a Latest Unlocks section to the top of Projects: short, muted loops of the newest builds (the Ekho drop-pace dashboard, a redacted paper trading dashboard, and the SAF Pathway Cost Explorer). Loops load lazily and hold still for visitors who prefer reduced motion. The site title now leads with my name.",
+    tags: ["Portfolio", "Video", "Accessibility"]
+  },
+  {
+    date: "September 12, 2026",
+    title: "Claude Project Work Page",
+    description: "Added a page that walks through five builds (the Ekho prototype, the SAF Pathway Cost Explorer, a reusable compliance skill, this website, and my tiered agent setup), each ending with the technique behind it. First published as Building with AI, renamed Claude Project Work the same day.",
+    tags: ["Content", "Claude", "Case Studies"]
+  },
+  {
+    date: "September 8, 2026",
+    title: "Home Page Refresh & Accuracy Pass",
+    description: "Rotating headshots on the home page, updated AI-tools language across the site (Claude Code and Claude Cowork alongside the early Replit work), and a Work section rebuilt against my resume. Removed an unverifiable claim from both the Work section and a home page pillar.",
+    tags: ["Content", "Accuracy", "Frontend"]
+  },
+  {
+    date: "September 6, 2026",
+    title: "Ekho Rapid-Prototyping Project Added",
+    description: "Added the Ekho Music Platform project to Projects with a live prototype link and four build artifacts embedded from YouTube. Large videos moved out of the repo to external hosting to keep the deploy light.",
+    tags: ["Projects", "Video", "Hosting"]
+  },
+  {
     date: "January 13, 2026",
     title: "Site Refactored to Professional Portfolio",
     description: "Restructured the entire site from a single Jasper Springs page to a multi-page professional portfolio. Created separate routes for Home, About, Work, Projects, Creative Lab, and Contact. Professional pages now present Jesse Springer as the primary identity, with Jasper Springs moved to a dedicated Creative Lab section.",

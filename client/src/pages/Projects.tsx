@@ -2,14 +2,88 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, LineChart, Network, ShieldCheck } from "lucide-react";
+import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, LineChart, Network, ShieldCheck, TrendingUp, BarChart3, Fuel } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import ProfessionalHeader from "@/components/ProfessionalHeader";
 import Footer from "@/components/Footer";
 import VideoEmbed from "@/components/VideoEmbed";
 import RotatingPhoto from "@/components/RotatingPhoto";
+import UnlockVideo from "@/components/UnlockVideo";
 const energyAppVideo = "/assets/energy-app-demo.mp4";
 const realPhoto = "/assets/jesse-real-photo.jpg";
 const aiPersona = "/assets/ai-persona-hero.jpg";
+
+type UnlockLink = { href: string; label: string; internal?: boolean };
+type UnlockClip =
+  | { provider: "local"; mp4: string; webm?: string; poster: string; alt: string }
+  | { provider: "youtube" | "vimeo"; videoId: string; si?: string };
+
+type Unlock = {
+  title: string;
+  icon: LucideIcon;
+  date: string;   // same format as artifacts and buildLogs: "September 17, 2026"
+  built: string;  // what I built, 1–2 sentences
+  why: string;    // why it matters, 1–2 sentences
+  clip: UnlockClip;
+  links: UnlockLink[];
+  tags: string[];
+};
+
+// Loops live in client/public/assets/unlocks/<slug>.{mp4,webm} + <slug>-poster.jpg
+// (3–8 s, muted, MP4 ≤ 2 MB, WebM ≤ 1.5 MB, poster ≤ 150 KB). Longer videos go to YouTube.
+const unlocks: Unlock[] = [
+  {
+    title: "Drop Page & Drop-Pace Dashboard",
+    icon: TrendingUp,
+    date: "September 17, 2026",
+    built: "Added a clickable fan-side drop page and an artist-side drop performance dashboard to the live Ekho prototype. The dashboard shows every drop's results, which platform each registration came from, and whether a running drop is pacing ahead of or behind the artist's own past drops.",
+    why: "Artists usually see how a drop did after it's over. Measuring a live drop against their own history at each touchpoint tells them mid-drop whether to hold the plan or change it. Shown here on my own Jasper Springs demo profile with the prototype's sample numbers.",
+    clip: {
+      provider: "local",
+      mp4: "/assets/unlocks/drop-pace.mp4",
+      webm: "/assets/unlocks/drop-pace.webm",
+      poster: "/assets/unlocks/drop-pace-poster.jpg",
+      alt: "Drop performance dashboard on the Jasper Springs demo profile: every drop, then a running drop's pace against past drops"
+    },
+    links: [{ href: "https://ekho-music-prototype.netlify.app/", label: "Live prototype" }],
+    tags: ["Claude Code", "Rapid prototyping", "Product analytics"]
+  },
+  {
+    title: "Paper Trading Dashboard",
+    icon: BarChart3,
+    date: "September 2026",
+    built: "A single-file dashboard for a paper-only practice portfolio: a PAPER ONLY banner, NAV and P&L tiles, strategy-sleeve bars and holdings tables, all read from one JSON view model so a paper broker API can plug in later without rewriting the UI.",
+    why: "It's a small pattern for tools that agents keep up to date: data refreshes arrive as reviewable file changes, every trade or rebalance proposal needs my approval, and nothing trades from the page. The clip is a redacted sample with every value masked.",
+    clip: {
+      provider: "local",
+      mp4: "/assets/unlocks/paper-dashboard.mp4",
+      webm: "/assets/unlocks/paper-dashboard.webm",
+      poster: "/assets/unlocks/paper-dashboard-poster.jpg",
+      alt: "Paper trading dashboard, redacted sample: PAPER ONLY banner, masked NAV tiles, sleeve bars and hidden positions"
+    },
+    links: [],
+    tags: ["Claude", "Single-file apps", "Approval gates"]
+  },
+  {
+    title: "SAF Pathway Cost Explorer",
+    icon: Fuel,
+    date: "September 2026",
+    built: "An interactive cost explorer for three sustainable aviation fuel pathways, ported from Excel techno-economic models into Python. Every per-gallon figure breaks down to its input line item with its derivation and source, and a tornado chart shows what moves the number.",
+    why: "Making each figure show its work is what surfaced a unit error in the source models. Switching the tornado between measured volatility, the spread across free public feeds, and calibrated estimates shows which inputs public data already covers and which would still need a paid feed.",
+    clip: {
+      provider: "local",
+      mp4: "/assets/unlocks/saf-cost-explorer.mp4",
+      webm: "/assets/unlocks/saf-cost-explorer.webm",
+      poster: "/assets/unlocks/saf-cost-explorer-poster.jpg",
+      alt: "SAF Pathway Cost Explorer tornado chart switching between measured, live-source and calibrated volatility"
+    },
+    links: [
+      { href: "/claude-project-work", label: "Case study", internal: true },
+      { href: "https://claude.ai/artifact/TDYCinw3rUhHRh1nhuL85L", label: "Live artifact" }
+    ],
+    tags: ["Claude Cowork", "Data provenance", "Techno-economic analysis"]
+  }
+];
 
 const projects = [
   {
@@ -28,7 +102,7 @@ const projects = [
         title: "Centralized Change Request Mode",
         href: "https://ekho-music-prototype.netlify.app/",
         date: "September 6, 2026",
-        provider: "youtube",
+        provider: "youtube" as const,
         videoId: "eaiCnTVhHy4",
         si: "_2FC0OP9TRMtrObc",
         description: "A \"Suggest Changes\" mode built directly into the live prototype — any stakeholder can click an element on screen and leave a targeted note. Every suggestion is visible to the whole team, gets accepted or rejected in the open, and exports straight to a markdown file Claude can implement. One shared plan of record, consensus in hours instead of meetings."
@@ -36,7 +110,7 @@ const projects = [
       {
         title: "Automated Artist Insight Videos",
         date: "September 6, 2026",
-        provider: "youtube",
+        provider: "youtube" as const,
         videoId: "L9jeVSF7tvI",
         si: "TqsptBIU1wwjhW6w",
         description: "A prototype for auto-generating a personalized highlight video for every artist on the platform — reach, what's working, how they compare to peers, where to focus next. Designed to scale from one artist to thousands without a camera crew."
@@ -44,7 +118,7 @@ const projects = [
       {
         title: "Royalty Audit Tool",
         date: "September 6, 2026",
-        provider: "youtube",
+        provider: "youtube" as const,
         videoId: "1MksgFC713A",
         si: "wETjlXh9Eaxyl9xI",
         description: (
@@ -60,7 +134,7 @@ const projects = [
       {
         title: "Investor Livestream Recap",
         date: "September 6, 2026",
-        provider: "youtube",
+        provider: "youtube" as const,
         videoId: "0vAj_cvmY2Q",
         si: "0gsY7ULqQQhLa7aW",
         description: "A CapCut edit of Ekho's first livestream event, cut into an investor- and partner-ready highlight reel — years of personal music-video editing experience put to work for the business."
@@ -157,6 +231,84 @@ export default function Projects() {
               <p className="text-xl text-muted-foreground max-w-2xl">
                 Side projects and experiments built with AI tools and rapid prototyping. Each one tests an idea and teaches something new.
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-12" aria-labelledby="unlocks-heading">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div className="space-y-2">
+              <h2 id="unlocks-heading" className="font-display text-2xl font-bold" data-testid="text-unlocks-title">
+                Latest Unlocks
+              </h2>
+              <p className="text-muted-foreground">
+                The newest things I've built, each with a few-second loop of it working.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              {unlocks.map((u, i) => {
+                const Icon = u.icon;
+                return (
+                  <Card key={i} className="flex flex-col" data-testid={`card-unlock-${i}`}>
+                    <CardContent className="p-6 space-y-4 flex flex-col flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-primary/10">
+                            <Icon className="h-5 w-5 text-primary" />
+                          </div>
+                          <h3 className="font-display text-lg font-bold">{u.title}</h3>
+                        </div>
+                        <span className="text-xs text-muted-foreground whitespace-nowrap">{u.date}</span>
+                      </div>
+                      {u.clip.provider === "local" ? (
+                        <UnlockVideo
+                          mp4={u.clip.mp4}
+                          webm={u.clip.webm}
+                          poster={u.clip.poster}
+                          alt={u.clip.alt}
+                          testId={`video-unlock-${i}`}
+                        />
+                      ) : (
+                        <VideoEmbed provider={u.clip.provider} id={u.clip.videoId} si={u.clip.si} title={u.title} />
+                      )}
+                      <div className="space-y-1">
+                        <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">What I Built</h4>
+                        <p className="text-sm text-muted-foreground">{u.built}</p>
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Why It Matters</h4>
+                        <p className="text-sm text-muted-foreground">{u.why}</p>
+                      </div>
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t mt-auto">
+                        <div className="flex flex-wrap gap-2">
+                          {u.tags.map((t, j) => (
+                            <Badge key={j} variant="secondary" className="text-xs">{t}</Badge>
+                          ))}
+                        </div>
+                        {u.links.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {u.links.map((l, j) =>
+                              l.internal ? (
+                                <Button key={j} variant="outline" size="sm" className="gap-1" asChild>
+                                  <Link href={l.href}>
+                                    {l.label} <ArrowRight className="h-3 w-3" />
+                                  </Link>
+                                </Button>
+                              ) : (
+                                <Button key={j} variant="outline" size="sm" className="gap-1" asChild>
+                                  <a href={l.href} target="_blank" rel="noopener noreferrer">
+                                    {l.label} <ExternalLink className="h-3 w-3" />
+                                  </a>
+                                </Button>
+                              )
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </section>
