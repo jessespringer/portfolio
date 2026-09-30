@@ -1,21 +1,37 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { Link } from "wouter";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import ProfessionalHeader from "@/components/ProfessionalHeader";
+import Footer from "@/components/Footer";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
-      <Card className="w-full max-w-md mx-4">
-        <CardContent className="pt-6">
-          <div className="flex mb-4 gap-2">
-            <AlertCircle className="h-8 w-8 text-red-500" />
-            <h1 className="text-2xl font-bold text-gray-900">404 Page Not Found</h1>
+    <div className="min-h-screen flex flex-col">
+      <ProfessionalHeader />
+      <main className="flex-1">
+        <section className="py-20 sm:py-32">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <p className="font-mono text-sm text-primary font-semibold">404</p>
+            <h1 className="font-display text-4xl sm:text-5xl font-bold" data-testid="text-not-found-title">
+              Page not found
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              This page doesn't exist, or it has moved.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button asChild className="gap-1" data-testid="button-not-found-home">
+                <Link href="/">
+                  Home <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button variant="outline" asChild data-testid="button-not-found-builds">
+                <Link href="/projects">AI &amp; Crypto Builds</Link>
+              </Button>
+            </div>
           </div>
-
-          <p className="mt-4 text-sm text-gray-600">
-            Did you forget to add the page to the router?
-          </p>
-        </CardContent>
-      </Card>
+        </section>
+      </main>
+      <Footer />
     </div>
   );
 }

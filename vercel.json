@@ -2,8 +2,21 @@
   "version": 2,
   "buildCommand": "npm run build:vercel",
   "outputDirectory": "dist/public",
+  "redirects": [
+    {
+      "source": "/claude-project-work",
+      "destination": "/projects",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/index" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

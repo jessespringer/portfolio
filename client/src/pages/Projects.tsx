@@ -2,13 +2,17 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, LineChart, Network, ShieldCheck, TrendingUp, Fuel } from "lucide-react";
+import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, Network, ShieldCheck, TrendingUp, Fuel, Globe, GraduationCap } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 import ProfessionalHeader from "@/components/ProfessionalHeader";
 import Footer from "@/components/Footer";
 import VideoEmbed from "@/components/VideoEmbed";
 import RotatingPhoto from "@/components/RotatingPhoto";
 import UnlockVideo from "@/components/UnlockVideo";
+import BuildStory, { type Story } from "@/components/BuildStory";
+import DropPlaybook from "@/components/DropPlaybook";
+import { PrototypeLoopVisual, UnitErrorVisual, GroundingVisual, AgentRoutingVisual, SkillLayersVisual } from "@/components/BuildVisuals";
 const energyAppVideo = "/assets/energy-app-demo.mp4";
 const realPhoto = "/assets/jesse-real-photo.jpg";
 const aiPersona = "/assets/ai-persona-hero.jpg";
@@ -28,6 +32,8 @@ type Unlock = {
   clip: UnlockClip;
   links: UnlockLink[];
   tags: string[];
+  story?: Story;  // optional "How it was built" sub-section
+  extra?: ReactNode; // optional card-specific sub-section (e.g. the Drop Playbook explainer)
 };
 
 // Loops live in client/public/assets/unlocks/<slug>.{mp4,webm} + <slug>-poster.jpg
@@ -35,11 +41,11 @@ type Unlock = {
 // A "gif" clip (e.g. a full-page scroll-through, ≤ ~5 MB) shows its poster instead under reduced motion.
 const unlocks: Unlock[] = [
   {
-    title: "Drop Page & Drop-Pace Dashboard",
+    title: "Drop Page, Drop Playbook & Drop Dashboard",
     icon: TrendingUp,
     date: "September 17, 2026",
-    built: "Added a clickable fan-side drop page and an artist-side drop performance dashboard to the live Ekho prototype. The dashboard shows every drop's results, which platform each registration came from, and whether a running drop is pacing ahead of or behind the artist's own past drops.",
-    why: "Artists usually see how a drop did after it's over. Measuring a live drop against their own history at each touchpoint tells them mid-drop whether to hold the plan or change it. Shown here on my own Jasper Springs demo profile with the prototype's sample numbers.",
+    built: "Three connected pieces in the live Ekho prototype: a clickable fan-side drop page; a Drop Playbook, an evolving playbook that tracks macro best practices across social platforms, viewer behavior and share of attention, and offers an optional pre- and post-drop touchpoint plan, a planner, and prescribed content to maximize interest and monetization; and a Drop Dashboard for the results.",
+    why: "The Drop Dashboard shows how drops that use the playbook track against, and outperform, drops that don't, so an artist can see mid-drop whether to hold the plan or change it. Shown here on my own Jasper Springs demo profile with the prototype's sample data.",
     clip: {
       provider: "local",
       mp4: "/assets/unlocks/drop-pace.mp4",
@@ -48,7 +54,8 @@ const unlocks: Unlock[] = [
       alt: "Drop performance dashboard on the Jasper Springs demo profile: every drop, then a running drop's pace against past drops"
     },
     links: [{ href: "https://ekho-music-prototype.netlify.app/", label: "Live prototype" }],
-    tags: ["Claude Code", "Rapid prototyping", "Product analytics"]
+    tags: ["Claude Code", "Rapid prototyping", "Product analytics"],
+    extra: <DropPlaybook testId="drop-playbook-unlock-0" />
   },
   {
     title: "SAF Pathway Cost Explorer",
@@ -64,18 +71,65 @@ const unlocks: Unlock[] = [
       width: 680,
       height: 389
     },
-    links: [
-      { href: "/claude-project-work", label: "Case study", internal: true },
-      { href: "https://claude.ai/artifact/TDYCinw3rUhHRh1nhuL85L", label: "Live artifact" }
-    ],
-    tags: ["Claude Cowork", "Data provenance", "Techno-economic analysis"]
+    links: [{ href: "https://claude.ai/artifact/TDYCinw3rUhHRh1nhuL85L", label: "Live artifact" }],
+    tags: ["Claude Cowork", "Data provenance", "Techno-economic analysis"],
+    story: {
+      journey: [
+        "Ported three production pathways — alcohol-to-jet, waste oils, and Fischer-Tropsch gasification — from the source Excel models into Python.",
+        "The ported output did not reconcile. Minimum selling price came out materially wrong, and no amount of re-reading the formulas explained it.",
+        "Rather than patch the number, I decomposed every figure down to its input line item and forced each one to carry its own derivation and its own cited source.",
+        "That made the error visible on its own: corn ethanol entered at $0.52/gal was almost certainly $0.52 per litre. Converted, it lands at $1.97/gal — within 1% of the published FOB Houston price.",
+        "The confirmation was not the fix working. It was running the same conversion on the other two feedstocks and watching it fail differently each time — used cooking oil overshot the market by 17% (a basis error, not a unit error), and forest residue, quoted per pound, needed no conversion at all.",
+        "Shipped as an interactive dashboard priced across fifteen hubs, with tornado charts that separate measured twelve-month volatility from estimated volatility — so you can see exactly where the estimates were wrong."
+      ],
+      shipped: [
+        "Three Excel models ported and reconciled in Python",
+        "Interactive cost explorer, every figure showing derivation and source",
+        "Tiered data-source register: free real-time, free lagged, subscription",
+        "Structural gaps named explicitly rather than quietly omitted"
+      ],
+      technique: {
+        name: "Make it show its work, then test the work against itself",
+        body:
+          "A ported model that emits a number is unverifiable. One that emits a number plus its formula and its source is auditable, and errors surface without anyone hunting for them. The second half matters more: a fix that explains one input is a guess. A fix that fails in a specific, predictable way on two other inputs is a diagnosis."
+      },
+      visual: <UnitErrorVisual />
+    }
   }
 ];
 
-const projects = [
+type ProjectArtifact = {
+  title: string;
+  href?: string;
+  date: string;
+  provider: "youtube" | "vimeo";
+  videoId: string;
+  si?: string;
+  description: ReactNode;
+};
+
+type Project = {
+  title: string;
+  icon: LucideIcon;
+  eyebrow?: string;
+  problem: string;
+  solution: string;
+  tools: string[];
+  learnings: string;
+  tags: string[];
+  status: string;
+  link?: string;
+  externalLink?: string;
+  externalLinkLabel?: string;
+  artifacts?: ProjectArtifact[];
+  story?: Story;  // "How it was built" (merged in from the former Claude Project Work page)
+};
+
+const projects: Project[] = [
   {
     title: "Ekho Music Platform — Rapid Prototyping",
     icon: Headphones,
+    eyebrow: "Claude Code · Aug–Sep 2026",
     problem: "Early-stage startups need working product, not just decks — and every stakeholder needs to align on what to build next, fast.",
     solution: "Partnered with founder Michael Jelen to rapid-prototype the Ekho Music Platform end-to-end in Claude Code — a two-sided platform connecting independent artists with their most devoted fans. Below is the build in motion: a live testable prototype, an automated artist-insights engine, a royalty-recovery tool, and the content produced along the way.",
     tools: ["Claude Code", "GitHub", "Netlify", "React", "HeyGen Hyperframes", "CapCut"],
@@ -126,40 +180,143 @@ const projects = [
         si: "0gsY7ULqQQhLa7aW",
         description: "A CapCut edit of Ekho's first livestream event, cut into an investor- and partner-ready highlight reel — years of personal music-video editing experience put to work for the business."
       }
-    ]
-  },
-  {
-    title: "Sustainable Aviation Fuel Cost Explorer",
-    icon: LineChart,
-    problem: "Three techno-economic models lived in Excel, and their outputs had to be taken on faith. Project leads needed to compare production pathways and see what actually moves the number.",
-    solution: "Ported three SAF production pathways — alcohol-to-jet, waste oils, and Fischer-Tropsch gasification — from Excel into Python, then decomposed every figure down to its input line item so each one carries its own derivation and cited source. Shipped as an interactive dashboard priced across fifteen hubs and benchmarked against conventional jet fuel, with tornado charts separating measured twelve-month volatility from estimated volatility.",
-    tools: ["Claude Cowork", "Python", "Public data APIs", "Interactive dashboards"],
-    learnings: "Forcing every number to show its derivation is what surfaced a unit-conversion error buried in the source models. The confirmation wasn't the fix working — it was watching the same correction fail differently on two other feedstocks, which turned a guess into a diagnosis.",
-    tags: ["Techno-Economic Analysis", "Data Provenance", "Claude Cowork"],
-    status: "Active",
-    link: "/claude-project-work"
+    ],
+    story: {
+      journey: [
+        "Shipped a live, testable prototype rather than static mockups. Anyone with the link could use the real thing.",
+        "The bottleneck turned out not to be build speed. Feedback arrived scattered across calls, texts and threads, and re-litigated itself every week.",
+        "So I built a “Suggest Changes” mode into the prototype itself. Any stakeholder clicks an element on screen and leaves a targeted note. Everyone sees every suggestion; accept and reject happen in the open.",
+        "Accepted changes export as a single markdown file that goes straight back into Claude Code as the implementation brief. One shared plan of record.",
+        "Then extended the same loop outward — an automated artist-insight engine, a mechanical-royalty recovery tool, and a social-audit pipeline repeatable enough that I have now run it for three separate artists."
+      ],
+      shipped: [
+        "Live prototype with stakeholder review built in",
+        "Royalty audit tool for recovering mechanical royalties",
+        "Automated artist insight video pipeline",
+        "Investor-ready livestream recap"
+      ],
+      technique: {
+        name: "Build the feedback loop into the artifact",
+        body:
+          "Most AI-assisted work does not stall at generation, it stalls at review — corrections scatter, context gets lost, and the same argument runs twice. The prompt is only half the system. The other half is the path a correction takes to get back in. When that path is short and visible to everyone, iteration speed stops depending on how good any single prompt was."
+      },
+      visual: <PrototypeLoopVisual />
+    }
   },
   {
     title: "BSA Loan Package Pre-Clearance Skill",
     icon: ShieldCheck,
+    eyebrow: "Claude Skills · case study for an AI banking platform · June 2026",
     problem: "Commercial loan files were reaching the BSA/AML team incomplete. Every return cost days of rework before the clearance clock even started — a bottleneck the lending and compliance teams each named independently.",
     solution: "Authored a reusable Claude Skill that reviews a commercial loan file before submission and produces a structured completeness report: entity summary, beneficial ownership chain traced to natural persons, document gap list, screening status, and a readiness flag. Built with progressive disclosure — a short activation description, a procedure body under 100 lines, and reference files loaded only when a step calls for them. Scoped deliberately so the skill flags and never decides; every compliance judgment stays with the BSA officer. Evaluated across two asymmetric loan scenarios on two model sizes.",
     tools: ["Claude Skills", "Claude Code", "Model evals", "Progressive disclosure"],
     learnings: "Constraining scope was the design win, not a limitation — removing judgment left assembly logic, which smaller and far cheaper models handle reliably. Expert review then caught two logic errors that were plausible but wrong in regulatory context, which is the failure mode that matters most in compliance work because the output still reads as credible.",
     tags: ["Claude Skills", "KYC & Compliance", "Evals"],
     status: "Case Study",
-    link: "/claude-project-work"
+    story: {
+      journey: [
+        "Scoped it deliberately narrow before writing anything. The skill flags; it does not decide. Whether activity is suspicious, whether a filing is warranted — that stays with the compliance officer.",
+        "That constraint turned out to be the design win rather than a limitation. What remained was assembly logic instead of judgment, and assembly logic is exactly what small, cheap models handle reliably.",
+        "Structured it as three layers of progressive disclosure: a one-sentence activation description, a procedure body kept under 100 lines, and reference files pulled in only when a step calls for them.",
+        "The first draft embedded the full checklist inline. On the smaller model that produced output that was correct but inconsistently formatted, and occasionally dropped rows entirely. Moving the checklist into a reference file and pinning a fixed output template fixed both problems at once.",
+        "Rewrote the readiness logic from prose — “if there are gaps, flag the file” — into explicitly enumerated conditions. That removed the ambiguity around genuinely borderline cases, like an appraisal that has been ordered but not yet received.",
+        "Tested against two deliberately asymmetric files: one clean single-owner case, and one built to stress it — ownership running two tiers through a holding company, an owner evidenced only by an accountant's email, several missing documents, and an unresolved screening match. Ran both across two model sizes side by side.",
+        "Wrote up the model recommendation with the reasoning: the smaller model is correct for this scope at a fraction of the cost, and the larger one only becomes necessary if the skill is extended into interpretive work."
+      ],
+      shipped: [
+        "Authored skill with checklist and output-template references",
+        "Two-scenario, two-model evaluation run side by side",
+        "Build narrative documenting every structure decision",
+        "Costed model recommendation with the threshold for revisiting it"
+      ],
+      caution: {
+        name: "What expert review caught — and why it matters",
+        items: [
+          {
+            claim: "Flagged a 20% owner's missing ID as a required gap.",
+            reality:
+              "The regulatory ownership threshold is 25%. The requirement had been applied too broadly, and an incorrect gap list would have gone to the borrower."
+          },
+          {
+            claim: "Escalated every unresolved screening match automatically.",
+            reality:
+              "A potential match with clear differentiating factors is routine disposition, not escalation. Conflating them overstates risk and manufactures work."
+          }
+        ],
+        body:
+          "Neither was a hallucination in the usual sense. Both were plausible-sounding rules that were imprecise in a specific regulatory context — which is the harder failure mode to catch, because the output reads as credible. It is the argument for domain review as a required step rather than a courtesy, and the reason the skill was scoped to defer judgment in the first place."
+      },
+      technique: {
+        name: "Constrain the scope until what is left is mechanical",
+        body:
+          "The instinct is to make a tool do as much as it possibly can. The better move here was subtraction. Deciding up front that the skill would flag and never decide did two things at once: it kept a human accountable for every judgment call, and it reduced the remaining work to classification and extraction — which a small, fast, inexpensive model does reliably. Scope discipline is not only a safety measure. It is what makes the model choice obvious."
+      },
+      visual: <SkillLayersVisual />
+    }
   },
   {
     title: "Tiered AI Agent Architecture",
     icon: Network,
+    eyebrow: "OpenClaw · Ollama · Claude · ongoing",
     problem: "Reaching for the largest available model on every task is slow, expensive, and unnecessary for most of what a day actually contains.",
     solution: "A local agent (OpenClaw running Gemma through Ollama) handles roughly 90% of routine work, escalating deliberately to Claude Cowork for complex reasoning and document work, and to Claude Code for terminal-level agentic work in repositories. The whole stack is reachable from a Telegram bot, so it works from a phone without opening a terminal.",
     tools: ["OpenClaw", "Ollama", "Claude Cowork", "Claude Code", "Telegram"],
     learnings: "Most of the effort went into identity and context files rather than model selection — agent behavior is largely context design. Deciding in advance what escalates, and why, turns an expensive habit into an architecture.",
     tags: ["Local Models", "Agent Design", "Context Engineering"],
     status: "Ongoing",
-    link: "/claude-project-work"
+    story: {
+      journey: [
+        "A local agent — OpenClaw running Gemma through Ollama on a Mac Mini — handles roughly 90% of routine work: lookups, drafting, file wrangling, quick questions.",
+        "It escalates deliberately: to Claude Cowork for complex reasoning and document work, and to Claude Code for terminal-level agentic work inside repositories.",
+        "The interface is a Telegram bot, so the whole stack is reachable from a phone without opening a terminal.",
+        "Most of the actual effort went into identity and context files — SOUL.md, USER.md, BOOTSTRAP.md — not into model selection. Behaviour is mostly context design.",
+        "I broke it once by relocating those context files into Dropbox, which silently disabled the initialization step. A useful reminder of how much agent behaviour is really just file-path convention holding steady."
+      ],
+      shipped: [
+        "Local-first agent handling the majority of daily tasks",
+        "Deliberate escalation path across three tiers",
+        "Telegram interface, usable from anywhere",
+        "Context and identity files version-controlled and synced across machines"
+      ],
+      technique: {
+        name: "Route by task weight, not by capability",
+        body:
+          "Capability is the axis everyone optimises, and it is rarely the binding one. Latency, privacy and cost all matter, and most tasks in a day are small. Deciding in advance what escalates — and why — turns an expensive habit into an architecture, and makes the expensive calls count for more when you do make them."
+      },
+      visual: <AgentRoutingVisual />
+    }
+  },
+  {
+    title: "This Website",
+    icon: Globe,
+    eyebrow: "Claude Cowork · ongoing",
+    problem: "Run a real production site end to end, not a sandbox, and keep every claim on it accurate enough to stand behind.",
+    solution: "Started on Replit Agent in January 2026 and moved the ongoing work to Claude Cowork and Claude Code. It runs on Vercel with GitHub auto-deploy, so every commit ships, and the Work section was rebuilt against my actual resume so every number traces to a source document.",
+    tools: ["Claude Cowork", "Claude Code", "Replit Agent", "Vercel", "GitHub"],
+    learnings: "These tools write upward: give them a thin fact and they return a confident, slightly larger version of it. The correction is a source document, not an adjective, and because generated copy gets reused, a claim you fixed once may still be sitting in two other places.",
+    tags: ["Claude Cowork", "Verification", "Shipping"],
+    status: "Live",
+    story: {
+      journey: [
+        "Started on Replit Agent in January 2026, then moved the ongoing work to Claude Cowork and Claude Code as the tooling got stronger.",
+        "Live on Vercel with GitHub auto-deploy, so every commit ships.",
+        "Reading back the Work section, I found a line claiming I had designed transaction flows processing billions in volume. I had not. It was plausible, well-written and false.",
+        "The fix was not better phrasing. I handed over my actual resume and had the section rebuilt against it, so every number traced to something real.",
+        "Then I found the same fabricated claim duplicated on the home page. Fixing the page you were shown is not the same as fixing the site."
+      ],
+      shipped: [
+        "Production site on Vercel, auto-deploying from GitHub",
+        "Work section rebuilt against source documents",
+        "Reusable components extracted as patterns repeat",
+        "A running project log so the next session picks up mid-stream"
+      ],
+      technique: {
+        name: "Ground claims in a source document, then search for the copies you missed",
+        body:
+          "These tools write upward. Give them a thin fact and they will return a confident, well-formed, slightly larger version of it — and the better the prose, the harder it is to notice. The correction is a source document, not an adjective. And because generated copy gets reused across a project, a claim you corrected once may still be sitting in two other places."
+      },
+      visual: <GroundingVisual />
+    }
   },
   {
     title: "The Energy App",
@@ -204,26 +361,62 @@ const projects = [
   }
 ];
 
+// "What I Would Teach" (from the former Claude Project Work page): the ideas that recur across the builds above.
+const curriculum = [
+  {
+    module: "Context is the product",
+    body: "The prompt is the small part. What the model can see — files, prior decisions, source documents, project state — determines the output far more than phrasing does."
+  },
+  {
+    module: "Close the correction loop",
+    body: "Design how feedback gets back in before you optimise how instructions go out. Scattered corrections, not weak prompts, are what stall most real projects."
+  },
+  {
+    module: "Make the work auditable",
+    body: "Require derivations and sources alongside answers. It costs little, and it converts silent errors into visible ones."
+  },
+  {
+    module: "Verify against documents, not vibes",
+    body: "Ground factual claims in a real artifact — a resume, a spec, a dataset. Fluent output is not evidence, and fluency is exactly what makes fabrication hard to spot."
+  },
+  {
+    module: "Assume duplication",
+    body: "Generated content gets copied across a project. After any correction, search the whole surface for the same claim rather than trusting the one place you were shown."
+  },
+  {
+    module: "Match the tool to the weight",
+    body: "Local model, chat assistant, or agentic coding tool — knowing which to reach for, and being able to say why, is most of practical fluency."
+  },
+  {
+    module: "Subtract until it is mechanical",
+    body: "Narrowing what a tool is allowed to decide keeps a human accountable and makes the remaining work small enough for a cheaper, faster model to do reliably. Scope is a design lever, not just a safety one."
+  },
+  {
+    module: "Plausible is not correct",
+    body: "The dangerous failure is not the obvious hallucination, it is the confident, well-formed rule that is subtly wrong for the context. Domain review has to be a required step, not a courtesy."
+  }
+];
+
 export default function Projects() {
   return (
     <div className="min-h-screen flex flex-col">
       <ProfessionalHeader />
       <main className="flex-1">
-        <section className="py-16 sm:py-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-12 sm:py-20">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
             <div className="space-y-6">
               <h1 className="font-display text-4xl sm:text-5xl font-bold" data-testid="text-projects-title">
-                Projects & Experiments
+                AI &amp; Crypto Builds
               </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl">
-                Side projects and experiments built with AI tools and rapid prototyping. Each one tests an idea and teaches something new.
+              <p className="text-xl text-muted-foreground max-w-3xl">
+                Builds and experiments across AI and crypto, shipped with AI tools and rapid prototyping. Each one tests an idea and teaches something new, and the AI builds open up to show the path each one actually took, including the parts that went wrong, and the technique behind it.
               </p>
             </div>
           </div>
         </section>
 
         <section className="pb-12" aria-labelledby="unlocks-heading">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 space-y-6">
             <div className="space-y-2">
               <h2 id="unlocks-heading" className="font-display text-2xl font-bold" data-testid="text-unlocks-title">
                 Latest Unlocks
@@ -232,21 +425,23 @@ export default function Projects() {
                 The newest things I've built, each with a short clip of it working.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-6">
               {unlocks.map((u, i) => {
                 const Icon = u.icon;
                 return (
                   <Card key={i} className="flex flex-col" data-testid={`card-unlock-${i}`}>
-                    <CardContent className="p-6 space-y-4 flex flex-col flex-1">
+                    <CardContent className="p-4 sm:p-6 space-y-4 flex flex-col flex-1">
                       <div className="flex items-start justify-between gap-2">
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-lg bg-primary/10">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="p-2 rounded-lg bg-primary/10 shrink-0">
                             <Icon className="h-5 w-5 text-primary" />
                           </div>
                           <h3 className="font-display text-lg font-bold">{u.title}</h3>
                         </div>
                         <span className="text-xs text-muted-foreground whitespace-nowrap">{u.date}</span>
                       </div>
+                      <div className="grid lg:grid-cols-5 gap-6 items-start">
+                      <div className="lg:col-span-3 min-w-0">
                       {u.clip.provider === "local" ? (
                         <UnlockVideo
                           mp4={u.clip.mp4}
@@ -272,6 +467,8 @@ export default function Projects() {
                       ) : (
                         <VideoEmbed provider={u.clip.provider} id={u.clip.videoId} si={u.clip.si} title={u.title} />
                       )}
+                      </div>
+                      <div className="lg:col-span-2 space-y-4 min-w-0">
                       <div className="space-y-1">
                         <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">What I Built</h4>
                         <p className="text-sm text-muted-foreground">{u.built}</p>
@@ -280,7 +477,7 @@ export default function Projects() {
                         <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Why It Matters</h4>
                         <p className="text-sm text-muted-foreground">{u.why}</p>
                       </div>
-                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t mt-auto">
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t">
                         <div className="flex flex-wrap gap-2">
                           {u.tags.map((t, j) => (
                             <Badge key={j} variant="secondary" className="text-xs">{t}</Badge>
@@ -306,6 +503,10 @@ export default function Projects() {
                           </div>
                         )}
                       </div>
+                      </div>
+                      </div>
+                      {u.extra}
+                      {u.story && <BuildStory story={u.story} testId={`story-unlock-${i}`} />}
                     </CardContent>
                   </Card>
                 );
@@ -315,20 +516,23 @@ export default function Projects() {
         </section>
 
         <section className="pb-16 sm:pb-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
             <div className="space-y-8">
               {projects.map((project, index) => {
                 const Icon = project.icon;
                 return (
                   <Card key={index} data-testid={`card-project-${index}`}>
-                    <CardContent className="p-8">
+                    <CardContent className="p-5 sm:p-8">
                       <div className="space-y-6">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-start gap-4">
-                            <div className="p-3 rounded-lg bg-primary/10">
+                        <div className="flex flex-wrap items-start justify-between gap-4">
+                          <div className="flex items-start gap-4 min-w-0">
+                            <div className="p-3 rounded-lg bg-primary/10 shrink-0">
                               <Icon className="h-6 w-6 text-primary" />
                             </div>
-                            <div>
+                            <div className="min-w-0">
+                              {project.eyebrow && (
+                                <div className="text-xs text-muted-foreground uppercase tracking-wide mb-1">{project.eyebrow}</div>
+                              )}
                               <h2 className="font-display text-2xl font-bold">{project.title}</h2>
                               <Badge variant="secondary" className="mt-2 text-xs">
                                 {project.status}
@@ -454,6 +658,8 @@ export default function Projects() {
                           </div>
                         )}
 
+                        {project.story && <BuildStory story={project.story} testId={`story-project-${index}`} />}
+
                         <div className="flex flex-wrap gap-2 pt-2 border-t">
                           {project.tags.map((tag, tagIndex) => (
                             <Badge key={tagIndex} variant="secondary" className="text-xs">
@@ -466,6 +672,40 @@ export default function Projects() {
                   </Card>
                 );
               })}
+
+              <Card data-testid="card-what-i-would-teach">
+                <CardContent className="p-5 sm:p-8 space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10 shrink-0">
+                      <GraduationCap className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="space-y-2 min-w-0">
+                      <h2 className="font-display text-2xl font-bold" data-testid="text-curriculum-title">What I Would Teach</h2>
+                      <p className="text-muted-foreground">
+                        The same eight ideas keep doing the work across the builds above. They are what I would build a course around: each one is demonstrable in a live session, and each one fails in a way people remember.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {curriculum.map((item, i) => (
+                      <div key={i} className="space-y-2 p-4 rounded-lg border border-border bg-muted/20" data-testid={`card-curriculum-${i}`}>
+                        <div className="flex items-baseline gap-3">
+                          <span className="font-mono text-xs text-primary font-semibold shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                          <h3 className="font-semibold">{item.module}</h3>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{item.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="pt-2 border-t">
+                    <Button asChild className="gap-1" data-testid="button-curriculum-contact">
+                      <Link href="/contact">
+                        Get in touch <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

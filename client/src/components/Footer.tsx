@@ -25,13 +25,13 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold">Explore</h4>
             <nav className="flex flex-col gap-2">
-              <a href="#music" className="text-sm text-muted-foreground hover-elevate active-elevate-2 px-2 py-1 rounded-md -ml-2" data-testid="link-footer-music">
+              <a href="/creative#music" className="text-sm text-muted-foreground hover-elevate active-elevate-2 px-2 py-1 rounded-md -ml-2" data-testid="link-footer-music">
                 Music Collection
               </a>
-              <a href="#portfolio" className="text-sm text-muted-foreground hover-elevate active-elevate-2 px-2 py-1 rounded-md -ml-2" data-testid="link-footer-portfolio">
+              <a href="/creative#portfolio" className="text-sm text-muted-foreground hover-elevate active-elevate-2 px-2 py-1 rounded-md -ml-2" data-testid="link-footer-portfolio">
                 Portfolio
               </a>
-              <a href="#about" className="text-sm text-muted-foreground hover-elevate active-elevate-2 px-2 py-1 rounded-md -ml-2" data-testid="link-footer-about">
+              <a href="/creative#about" className="text-sm text-muted-foreground hover-elevate active-elevate-2 px-2 py-1 rounded-md -ml-2" data-testid="link-footer-about">
                 About
               </a>
             </nav>
@@ -79,10 +79,6 @@ export default function Footer() {
           <p className="text-sm text-muted-foreground">
             © 2024 Jasper Springs. Built with Solana + Stripe + AI
           </p>
-          <div className="flex gap-4 text-sm text-muted-foreground">
-            <a href="#" className="hover-elevate active-elevate-2 px-2 py-1 rounded-md">Privacy</a>
-            <a href="#" className="hover-elevate active-elevate-2 px-2 py-1 rounded-md">Terms</a>
-          </div>
         </div>
       </div>
     </footer>

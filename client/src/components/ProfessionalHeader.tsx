@@ -9,10 +9,8 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/work", label: "Work" },
-  { href: "/projects", label: "Projects" },
-  { href: "/claude-project-work", label: "Claude Project Work" },
+  { href: "/projects", label: "AI & Crypto Builds" },
   { href: "/creative", label: "Creative Lab" },
-  { href: "/build-log", label: "Build Log" },
   { href: "/contact", label: "Contact" },
 ];
 
