@@ -125,7 +125,7 @@ export default function Contact() {
                   <Link href="/work">View Work Experience</Link>
                 </Button>
                 <Button variant="outline" asChild>
-                  <Link href="/projects">Browse Projects</Link>
+                  <Link href="/projects">Browse AI &amp; Crypto Builds</Link>
                 </Button>
                 <Button variant="outline" asChild>
                   <Link href="/creative">See Creative Lab</Link>

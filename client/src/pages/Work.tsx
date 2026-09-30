@@ -131,7 +131,7 @@ export default function Work() {
               </p>
               <Button size="lg" className="gap-2" asChild>
                 <Link href="/projects">
-                  View Projects
+                  View AI &amp; Crypto Builds
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
