@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, Network, ShieldCheck, TrendingUp, Fuel, Globe, GraduationCap } from "lucide-react";
+import { ArrowRight, ExternalLink, Zap, Music, Blocks, Bot, Headphones, Network, ShieldCheck, TrendingUp, Fuel, Globe, GraduationCap, FileSearch } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import ProfessionalHeader from "@/components/ProfessionalHeader";
@@ -41,6 +41,22 @@ type Unlock = {
 // A "gif" clip (e.g. a full-page scroll-through, ≤ ~5 MB) shows its poster instead under reduced motion.
 const unlocks: Unlock[] = [
   {
+    title: "Royalty Audit",
+    icon: FileSearch,
+    date: "October 1, 2026",
+    built: "A Claude Code-built royalty audit flow in the live Ekho prototype. An artist confirms their profile and roles, answers a few questions or uploads a royalty statement, and gets an estimated range of royalties they may be missing, each possible gap with how to claim it, and a tracker for the claims they start.",
+    why: "Independent artists can leave money unclaimed when a song or recording isn't registered everywhere it should be, and it's easy never to notice. The audit turns that into a short list of gaps with an estimate attached. Shown here on my own Jasper Springs demo profile with the prototype's sample data.",
+    clip: {
+      provider: "local",
+      mp4: "/assets/unlocks/royalty-audit.mp4",
+      webm: "/assets/unlocks/royalty-audit.webm",
+      poster: "/assets/unlocks/royalty-audit-poster.jpg",
+      alt: "Royalty audit on the Jasper Springs demo profile: confirm your details, the catalogue check, then the sample estimate of possible uncollected royalties and the first possible gap with its claim button"
+    },
+    links: [{ href: "https://ekho-music-prototype.netlify.app/v2/additions/artist-console/royalties-start.html?as=artist", label: "Live prototype" }],
+    tags: ["Claude Code", "Rapid prototyping", "Music royalties"]
+  },
+  {
     title: "Drop Page, Drop Playbook & Drop Dashboard",
     icon: TrendingUp,
     date: "September 17, 2026",
@@ -55,7 +71,7 @@ const unlocks: Unlock[] = [
     },
     links: [{ href: "https://ekho-music-prototype.netlify.app/", label: "Live prototype" }],
     tags: ["Claude Code", "Rapid prototyping", "Product analytics"],
-    extra: <DropPlaybook testId="drop-playbook-unlock-0" />
+    extra: <DropPlaybook testId="drop-playbook-unlock-1" />
   },
   {
     title: "SAF Pathway Cost Explorer",
